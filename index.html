@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Self Service Order</title>
+</head>
+
+<body>
+
+    <main id="app">
+        <section class="items">
+            <h4>Selecione os produtos</h4>
+            <div @click="product.active = !product.active" v-for="product in products" class="product" :class="{
+                selected: product.active}">
+                <div class=" photo">
+                    <img :src="product.photo">
+                </div>
+                <div class="description">
+                    <span class="name">{{ product.name }}</span>
+                    <span class="price">$ {{ product.price }}</span>
+                    <div v-if="product.active" class="quantity-area">
+                        <button @click.stop="product.quantity--" :disabled="product.quantity <= 1">-</button>
+                        <span class="quantity">{{ product.quantity }}</span>
+                        <button @click.stop="product.quantity++">+</button>
+                    </div>
+                    </div++ </div>
+        </section>
+
+        <section class="summary" v-if="getTotal()>0">
+            <strong>Resumo do pedido</strong>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="product in products">
+                        <template v-if="product.active">
+                            <td>{{ product.quantity + 'x ' + product.name }}</td>
+                            <td>{{ (product.quantity * product.price).toFixed(2) }}</td>
+                        </template>
+                    </tr>
+
+                    <tr>
+                        <th>Total</th>
+                        <th>{{ getTotal() }}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script src=" ./scripts.js">
+    </script>
+</body>
+
+</html>
